@@ -14,3 +14,8 @@
 .center-align {
   text-align: center;
 }
+
+.filters {
+  display: flex;
+  justify-content: space-evenly;
+}

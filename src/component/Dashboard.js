@@ -10,6 +10,7 @@ function Dashboard() {
   const [bangaloreRural, setBangaloreRural] = useState([]);
   const [bbmp, setBbmp] = useState([]);
   const [vaccineName, setvaccineName] = useState("COVISHIELD");
+  const [agelimit, setAgeLimit] = useState(45);
 
   useEffect(() => {
     makeApiRequest()
@@ -49,27 +50,43 @@ function Dashboard() {
     setvaccineName(e.target.value);
   };
 
+  const setmaxAge = (e) => {
+    setAgeLimit(parseInt(e.target.value));
+  };
+
   return (
     <Container>
       <Jumbotron>
         <h1 className="center-align">Covid Vaccination Data</h1>
-        <div onChange={setVaccineName}>
-          <input
-            type="radio"
-            value="COVISHIELD"
-            name="vaccine"
-            defaultChecked
-          />
-          COVISHIELD
-          <br></br>
-          <input type="radio" value="COVAXIN" name="vaccine" /> COVAXIN
-        </div>
+        <div className="filters">
+          <div onChange={setVaccineName}>
+            <input
+              type="radio"
+              value="COVISHIELD"
+              name="vaccine"
+              defaultChecked
+            />
+            COVISHIELD
+            <br></br>
+            <input type="radio" value="COVAXIN" name="vaccine" /> COVAXIN
+          </div>
 
+          <div onChange={setmaxAge}>
+            <input type="radio" value="45" name="ageLimit" defaultChecked />
+            45+
+            <br></br>
+            <input type="radio" value="18" name="ageLimit" /> 18+
+          </div>
+        </div>
         <section>
           {bangaloreRural.length > 0 && (
             <>
               <h3 className="center-align">Bangalore Rural</h3>
-              <DataMapping vaccine={vaccineName} district={bangaloreRural} />
+              <DataMapping
+                maxage={agelimit}
+                vaccine={vaccineName}
+                district={bangaloreRural}
+              />
             </>
           )}
         </section>
@@ -78,7 +95,11 @@ function Dashboard() {
           {bangaloreUrban.length > 0 && (
             <>
               <h3 className="center-align">Bangalore Urban</h3>
-              <DataMapping vaccine={vaccineName} district={bangaloreUrban} />
+              <DataMapping
+                maxage={agelimit}
+                vaccine={vaccineName}
+                district={bangaloreUrban}
+              />
             </>
           )}
         </section>
@@ -87,7 +108,11 @@ function Dashboard() {
           {bbmp.length > 0 && (
             <>
               <h3 className="center-align">BBMP</h3>
-              <DataMapping vaccine={vaccineName} district={bbmp} />
+              <DataMapping
+                maxage={agelimit}
+                vaccine={vaccineName}
+                district={bbmp}
+              />
             </>
           )}
         </section>
@@ -96,7 +121,11 @@ function Dashboard() {
           {kolar.length > 0 && (
             <>
               <h3 className="center-align">kolar</h3>
-              <DataMapping vaccine={vaccineName} district={kolar} />
+              <DataMapping
+                maxage={agelimit}
+                vaccine={vaccineName}
+                district={kolar}
+              />
             </>
           )}
         </section>
@@ -105,7 +134,11 @@ function Dashboard() {
           {chikkaballapur.length > 0 && (
             <>
               <h3 className="center-align">Chikkaballapur</h3>
-              <DataMapping vaccine={vaccineName} district={chikkaballapur} />
+              <DataMapping
+                maxage={agelimit}
+                vaccine={vaccineName}
+                district={chikkaballapur}
+              />
             </>
           )}
         </section>
