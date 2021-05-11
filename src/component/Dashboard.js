@@ -1,47 +1,63 @@
-import React, { useEffect, useState } from "react";
-import { Jumbotron, Container } from "react-bootstrap";
-import axios from "axios";
-import { makeApiRequest } from "../Utils";
-import DataMapping from "./DataMapping";
+import React, { useEffect, useState } from 'react';
+import { Jumbotron, Container } from 'react-bootstrap';
+import axios from 'axios';
+import { makeApiRequest } from '../Utils';
+import DataMapping from './DataMapping';
 function Dashboard() {
   const [chikkaballapur, setchikkaballapur] = useState([]);
   const [kolar, setkolar] = useState([]);
   const [bangaloreUrban, setBangaloreUrban] = useState([]);
   const [bangaloreRural, setBangaloreRural] = useState([]);
   const [bbmp, setBbmp] = useState([]);
-  const [vaccineName, setvaccineName] = useState("COVISHIELD");
+  const [vaccineName, setvaccineName] = useState('COVISHIELD');
   const [agelimit, setAgeLimit] = useState(45);
-
+  /// Kyum here
   useEffect(() => {
-    makeApiRequest()
-      .then(
-        axios.spread((...responses) => {
-          setchikkaballapur(responses[0].data.centers);
-          setkolar(responses[1].data.centers);
-          setBangaloreUrban(responses[2].data.centers);
-          setBangaloreRural(responses[3].data.centers);
-          setBbmp(responses[4].data.centers);
+    const callApi = setInterval(() => {
+      makeApiRequest()
+        .then(
+          axios.spread((...responses) => {
+            console.log(responses[0]);
+            console.log(responses[1]);
+            console.log(responses[2]);
+            console.log(responses[3]);
+            console.log(responses[4]);
+            setchikkaballapur(responses[0].data.centers);
+            setkolar(responses[1].data.centers);
+            setBangaloreUrban(responses[2].data.centers);
+            setBangaloreRural(responses[3].data.centers);
+            setBbmp(responses[4].data.centers);
+          })
+        )
+        .then(() => {
+          // setTimeout(hideBlankData, 500);
+          hideBlankData();
         })
-      )
-      .then(() => {
-        setTimeout(hideBlankData, 500);
-      })
-      .catch((errors) => {
-        console.log("Network Error Occured");
-      });
-    console.log("Hey");
+        .catch((errors) => {
+          console.log('Network Error Occured');
+        });
+    }, 3000);
+    console.log('Hey');
+    return () => {
+      clearInterval(callApi);
+      setchikkaballapur([]);
+      setkolar([]);
+      setBangaloreUrban([]);
+      setBangaloreRural([]);
+      setBbmp([]);
+    };
   }, [vaccineName]);
 
   const hideBlankData = () => {
     for (
       let i = 0;
-      i < document.querySelectorAll(".card-inner-body").length;
+      i < document.querySelectorAll('.card-inner-body').length;
       i++
     ) {
-      if (document.querySelectorAll(".card-inner-body")[i].innerText === "") {
-        document.querySelectorAll(".card-inner-body")[
+      if (document.querySelectorAll('.card-inner-body')[i].innerText === '') {
+        document.querySelectorAll('.card-inner-body')[
           i
-        ].parentElement.parentElement.style.display = "none";
+        ].parentElement.parentElement.style.display = 'none';
       }
     }
   };
@@ -51,6 +67,7 @@ function Dashboard() {
   };
 
   const setmaxAge = (e) => {
+    console.log(e.target.value);
     setAgeLimit(parseInt(e.target.value));
   };
 
