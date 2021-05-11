@@ -17,11 +17,11 @@ function Dashboard() {
     makeApiRequest()
       .then(
         axios.spread((...responses) => {
-          console.log(responses[0]);
-          console.log(responses[1]);
-          console.log(responses[2]);
-          console.log(responses[3]);
-          console.log(responses[4]);
+          // console.log(responses[0]);
+          // console.log(responses[1]);
+          // console.log(responses[2]);
+          // console.log(responses[3]);
+          // console.log(responses[4]);
           setchikkaballapur(responses[0].data.centers);
           setkolar(responses[1].data.centers);
           setBangaloreUrban(responses[2].data.centers);
