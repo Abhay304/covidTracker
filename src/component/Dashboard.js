@@ -13,33 +13,33 @@ function Dashboard() {
   const [agelimit, setAgeLimit] = useState(45);
   /// Kyum here
   useEffect(() => {
-    const callApi = setInterval(() => {
-      makeApiRequest()
-        .then(
-          axios.spread((...responses) => {
-            console.log(responses[0]);
-            console.log(responses[1]);
-            console.log(responses[2]);
-            console.log(responses[3]);
-            console.log(responses[4]);
-            setchikkaballapur(responses[0].data.centers);
-            setkolar(responses[1].data.centers);
-            setBangaloreUrban(responses[2].data.centers);
-            setBangaloreRural(responses[3].data.centers);
-            setBbmp(responses[4].data.centers);
-          })
-        )
-        .then(() => {
-          // setTimeout(hideBlankData, 500);
-          hideBlankData();
+    // const callApi = setInterval(() => {
+    makeApiRequest()
+      .then(
+        axios.spread((...responses) => {
+          console.log(responses[0]);
+          console.log(responses[1]);
+          console.log(responses[2]);
+          console.log(responses[3]);
+          console.log(responses[4]);
+          setchikkaballapur(responses[0].data.centers);
+          setkolar(responses[1].data.centers);
+          setBangaloreUrban(responses[2].data.centers);
+          setBangaloreRural(responses[3].data.centers);
+          setBbmp(responses[4].data.centers);
         })
-        .catch((errors) => {
-          console.log('Network Error Occured');
-        });
-    }, 3000);
-    console.log('Hey');
+      )
+      .then(() => {
+        // setTimeout(hideBlankData, 500);
+        hideBlankData();
+      })
+      .catch((errors) => {
+        console.log('Network Error Occured');
+      });
+    //   }, 3000);
+
     return () => {
-      clearInterval(callApi);
+      //   clearInterval(callApi);
       setchikkaballapur([]);
       setkolar([]);
       setBangaloreUrban([]);
@@ -67,7 +67,6 @@ function Dashboard() {
   };
 
   const setmaxAge = (e) => {
-    console.log(e.target.value);
     setAgeLimit(parseInt(e.target.value));
   };
 

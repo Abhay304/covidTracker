@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Card } from 'react-bootstrap';
 function DataMapping(props) {
-  useEffect(() => {
-    console.log(props.vaccine);
-  }, [props.vaccine]);
+  // useEffect(() => {
+  //   console.log(props.vaccine);
+  // }, [props.vaccine]);
 
   return (
     <>
