@@ -35,6 +35,7 @@ function Dashboard() {
       })
       .catch((errors) => {
         console.log('Network Error Occured');
+        hideBlankData();
       });
     //   }, 3000);
 
