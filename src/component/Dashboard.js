@@ -1,8 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { Jumbotron, Container } from 'react-bootstrap';
+import React, { Suspense, useEffect, useState } from 'react';
+import img from '../vacc_img5.jpg';
+
+import {
+  Jumbotron,
+  Container,
+  ListGroupItem,
+  Card,
+  ListGroup,
+} from 'react-bootstrap';
 import axios from 'axios';
 import { makeApiRequest } from '../Utils';
-import DataMapping from './DataMapping';
+import Loading from './Loading';
+
+const DataMapping = React.lazy(() => import('./DataMapping'));
+
 function Dashboard() {
   const [chikkaballapur, setchikkaballapur] = useState([]);
   const [kolar, setkolar] = useState([]);
@@ -11,6 +22,16 @@ function Dashboard() {
   const [bbmp, setBbmp] = useState([]);
   const [vaccineName, setvaccineName] = useState('COVISHIELD');
   const [agelimit, setAgeLimit] = useState(45);
+
+  const bnImg = {
+    // backgroundImage: `url(${img})`,
+    height: '275px',
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no - repeat',
+    backgroundSize: 'cover',
+    position: 'relative',
+  };
+
   /// Kyum here
   useEffect(() => {
     // const callApi = setInterval(() => {
@@ -73,93 +94,143 @@ function Dashboard() {
 
   return (
     <Container>
-      <Jumbotron>
-        <h1 className="center-align">Covid Vaccination Data</h1>
-        <div className="filters">
-          <div onChange={setVaccineName}>
-            <input
-              type="radio"
-              value="COVISHIELD"
-              name="vaccine"
-              defaultChecked
-            />
-            COVISHIELD
-            <br></br>
-            <input type="radio" value="COVAXIN" name="vaccine" /> COVAXIN
-          </div>
+      <Card>
+        <Jumbotron>
+          <Card.Img variant="top" style={bnImg} src={img} />
+          <Card.Body>
+            <Card.Title>
+              <h1 className="center-align">Covid Vaccination Data</h1>
+            </Card.Title>
+            <Card.Text style={{ textAlign: 'center' }}>
+              Please select Vaccine dose and age to know whether vaccine is
+              available in your zone!!
+            </Card.Text>
 
-          <div onChange={setmaxAge}>
-            <input type="radio" value="45" name="ageLimit" defaultChecked />
-            45+
-            <br></br>
-            <input type="radio" value="18" name="ageLimit" /> 18+
-          </div>
-        </div>
-        <section>
-          {bangaloreRural.length > 0 && (
-            <>
-              <h3 className="center-align">Bangalore Rural</h3>
-              <DataMapping
-                maxage={agelimit}
-                vaccine={vaccineName}
-                district={bangaloreRural}
-              />
-            </>
-          )}
-        </section>
-        <hr></hr>
-        <section>
-          {bangaloreUrban.length > 0 && (
-            <>
-              <h3 className="center-align">Bangalore Urban</h3>
-              <DataMapping
-                maxage={agelimit}
-                vaccine={vaccineName}
-                district={bangaloreUrban}
-              />
-            </>
-          )}
-        </section>
-        <hr></hr>
-        <section>
-          {bbmp.length > 0 && (
-            <>
-              <h3 className="center-align">BBMP</h3>
-              <DataMapping
-                maxage={agelimit}
-                vaccine={vaccineName}
-                district={bbmp}
-              />
-            </>
-          )}
-        </section>
-        <hr></hr>
-        <section>
-          {kolar.length > 0 && (
-            <>
-              <h3 className="center-align">kolar</h3>
-              <DataMapping
-                maxage={agelimit}
-                vaccine={vaccineName}
-                district={kolar}
-              />
-            </>
-          )}
-        </section>
-        <hr></hr>
-        <section>
-          {chikkaballapur.length > 0 && (
-            <>
-              <h3 className="center-align">Chikkaballapur</h3>
-              <DataMapping
-                maxage={agelimit}
-                vaccine={vaccineName}
-                district={chikkaballapur}
-              />
-            </>
-          )}
-        </section>
-      </Jumbotron>
+            <div className="filters">
+              <div onChange={setVaccineName}>
+                <input
+                  type="radio"
+                  value="COVISHIELD"
+                  name="vaccine"
+                  defaultChecked
+                />
+                COVISHIELD
+                <br></br>
+                <input type="radio" value="COVAXIN" name="vaccine" />
+                COVAXIN
+              </div>
+
+              <div onChange={setmaxAge}>
+                <input type="radio" value="45" name="ageLimit" defaultChecked />
+                45+
+                <br></br>
+                <input type="radio" value="18" name="ageLimit" />
+                18+
+              </div>
+            </div>
+          </Card.Body>
+
+          <ListGroup className="list-group-flush">
+            <Suspense fallback={<Loading />}>
+              <section>
+                {/* {bangaloreRural.length > 0 && (
+              <> */}
+                <ListGroupItem>
+                  <h3 className="center-align">Bangalore Rural</h3>
+                </ListGroupItem>
+
+                <DataMapping
+                  maxage={agelimit}
+                  vaccine={vaccineName}
+                  district={bangaloreRural}
+                />
+
+                {/* </>
+            )} */}
+              </section>
+            </Suspense>
+            {/* <hr></hr> */}
+            <Suspense fallback={<Loading />}>
+              <section>
+                {/* {bangaloreUrban.length > 0 && (
+              <> */}
+                <ListGroupItem>
+                  <h3 className="center-align">Bangalore Urban</h3>
+                </ListGroupItem>
+
+                <DataMapping
+                  maxage={agelimit}
+                  vaccine={vaccineName}
+                  district={bangaloreUrban}
+                />
+
+                {/* </>
+            )} */}
+              </section>
+            </Suspense>
+            {/* <hr></hr> */}
+            <Suspense fallback={<Loading />}>
+              <section>
+                {/* {bbmp.length > 0 && (
+              <> */}
+                <ListGroupItem>
+                  <h3 className="center-align">BBMP</h3>
+                </ListGroupItem>
+
+                <DataMapping
+                  maxage={agelimit}
+                  vaccine={vaccineName}
+                  district={bbmp}
+                />
+
+                {/* </>
+            )} */}
+              </section>
+            </Suspense>
+            {/* <hr></hr> */}
+            <Suspense fallback={<Loading />}>
+              <section>
+                {/* {kolar.length > 0 && (
+              <> */}
+                <ListGroupItem>
+                  <h3 className="center-align">kolar</h3>
+                </ListGroupItem>
+
+                <DataMapping
+                  maxage={agelimit}
+                  vaccine={vaccineName}
+                  district={kolar}
+                />
+
+                {/* </>
+            )} */}
+              </section>
+            </Suspense>
+            {/* <hr></hr> */}
+            <Suspense fallback={<Loading />}>
+              <section>
+                {/* {chikkaballapur.length > 0 && (
+              <> */}
+                <ListGroupItem>
+                  <h3 className="center-align">Chikkaballapur</h3>
+                </ListGroupItem>
+
+                {/* <ErrorBoundary> */}
+
+                <DataMapping
+                  maxage={agelimit}
+                  vaccine={vaccineName}
+                  district={chikkaballapur}
+                />
+
+                {/* </ErrorBoundary> */}
+                {/* </>
+            )} */}
+              </section>
+            </Suspense>
+          </ListGroup>
+        </Jumbotron>
+      </Card>
     </Container>
   );
 }

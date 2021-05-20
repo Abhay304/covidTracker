@@ -26,8 +26,10 @@ function DataMapping(props) {
                             <b>Vaccine Name :</b> {sessionData.vaccine}
                           </span>
                           <span>
-                            <b>Dose Left :</b>
-                            {sessionData.available_capacity}
+                            <b style={{ color: 'orange' }}>Dose Left :</b>
+                            <span style={{ color: 'green' }}>
+                              {sessionData.available_capacity}
+                            </span>
                           </span>
                           <span>
                             <b>Vaccine Date :</b>
