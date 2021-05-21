@@ -1,5 +1,6 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import img from '../vacc_img5.jpg';
+import Full from './FullLoad';
 
 import {
   Jumbotron,
@@ -22,6 +23,7 @@ function Dashboard() {
   const [bbmp, setBbmp] = useState([]);
   const [vaccineName, setvaccineName] = useState('COVISHIELD');
   const [agelimit, setAgeLimit] = useState(45);
+  const [isLoad, setisLoad] = useState(true);
 
   const bnImg = {
     // backgroundImage: `url(${img})`,
@@ -48,16 +50,22 @@ function Dashboard() {
           setBangaloreUrban(responses[2].data.centers);
           setBangaloreRural(responses[3].data.centers);
           setBbmp(responses[4].data.centers);
+          hideBlankData();
         })
       )
       .then(() => {
-        // setTimeout(hideBlankData, 500);
+        // setisLoad(false);
         hideBlankData();
+        isLoad && setTimeout(() => setisLoad(false), 10000);
       })
       .catch((errors) => {
         hideBlankData();
+        isLoad && setTimeout(() => setisLoad(false), 10000);
         console.log('Network Error Occured');
       });
+
+    // setisLoad(false);
+    // console.log(isLoad);
     //   }, 3000);
 
     return () => {
@@ -67,8 +75,10 @@ function Dashboard() {
       setBangaloreUrban([]);
       setBangaloreRural([]);
       setBbmp([]);
+      hideBlankData();
+      // setisLoad(true);
     };
-  }, [vaccineName]);
+  }, [vaccineName, isLoad]);
 
   const hideBlankData = () => {
     for (
@@ -91,7 +101,9 @@ function Dashboard() {
   const setmaxAge = (e) => {
     setAgeLimit(parseInt(e.target.value));
   };
-
+  if (isLoad) {
+    return <Full />;
+  }
   return (
     <Container>
       <Card>
