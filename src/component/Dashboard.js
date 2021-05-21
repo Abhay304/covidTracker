@@ -25,7 +25,7 @@ function Dashboard() {
 
   const bnImg = {
     // backgroundImage: `url(${img})`,
-    height: '275px',
+    height: '280px',
     backgroundPosition: 'center',
     backgroundRepeat: 'no - repeat',
     backgroundSize: 'cover',

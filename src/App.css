@@ -19,3 +19,11 @@
   display: flex;
   justify-content: space-evenly;
 }
+
+.list-group-item {
+  background-color: #52c6ff;
+}
+
+.card {
+  background-color: #f2fbff;
+}
