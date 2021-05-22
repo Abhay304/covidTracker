@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Card, Row, Col } from 'react-bootstrap';
 function DataMapping(props) {
-  // useEffect(() => {
-  //   console.log(props.vaccine);
-  // }, [props.vaccine]);
+  useEffect(() => {
+    // console.log(props.vaccine);
+    props.hideMethod();
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>

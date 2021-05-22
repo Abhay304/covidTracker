@@ -37,10 +37,12 @@ function Dashboard() {
   /// Kyum here
   useEffect(() => {
     // const callApi = setInterval(() => {
+    hideBlankData();
     makeApiRequest()
       .then(
         axios.spread((...responses) => {
-          // console.log(responses[0]);
+          // console.log('Hi in 1st then');
+          // console.log(responses[0].data.centers);
           // console.log(responses[1]);
           // console.log(responses[2]);
           // console.log(responses[3]);
@@ -50,17 +52,31 @@ function Dashboard() {
           setBangaloreUrban(responses[2].data.centers);
           setBangaloreRural(responses[3].data.centers);
           setBbmp(responses[4].data.centers);
+          // console.log(chikkaballapur);
+          // console.log(kolar);
+          // console.log(bangaloreUrban);
+          // console.log(bangaloreRural);
+          // console.log(bbmp);
           hideBlankData();
         })
       )
       .then(() => {
-        // setisLoad(false);
+        // console.log('Hi in 2nd then');
         hideBlankData();
-        isLoad && setTimeout(() => setisLoad(false), 10000);
+        isLoad &&
+          setTimeout(() => {
+            setisLoad(false);
+            hideBlankData();
+          }, 10000);
       })
       .catch((errors) => {
+        // console.log('Hi in catch');
         hideBlankData();
-        isLoad && setTimeout(() => setisLoad(false), 10000);
+        isLoad &&
+          setTimeout(() => {
+            setisLoad(false);
+            hideBlankData();
+          }, 10000);
         console.log('Network Error Occured');
       });
 
@@ -76,13 +92,13 @@ function Dashboard() {
       setBangaloreRural([]);
       setBbmp([]);
       hideBlankData();
-      // setisLoad(true);
     };
-  }, [vaccineName, isLoad]);
+    // eslint-disable-next-line
+  }, [vaccineName, agelimit]);
 
   const hideBlankData = () => {
     for (
-      let i = 0;
+      var i = 0;
       i < document.querySelectorAll('.card-inner-body').length;
       i++
     ) {
@@ -101,9 +117,11 @@ function Dashboard() {
   const setmaxAge = (e) => {
     setAgeLimit(parseInt(e.target.value));
   };
+  // eslint-disable-next-line
   if (isLoad) {
     return <Full />;
   }
+  // console.log('Hi in render');
   return (
     <Container>
       <Card>
@@ -155,6 +173,7 @@ function Dashboard() {
                   maxage={agelimit}
                   vaccine={vaccineName}
                   district={bangaloreRural}
+                  hideMethod={hideBlankData}
                 />
 
                 {/* </>
@@ -174,6 +193,7 @@ function Dashboard() {
                   maxage={agelimit}
                   vaccine={vaccineName}
                   district={bangaloreUrban}
+                  hideMethod={hideBlankData}
                 />
 
                 {/* </>
@@ -193,6 +213,7 @@ function Dashboard() {
                   maxage={agelimit}
                   vaccine={vaccineName}
                   district={bbmp}
+                  hideMethod={hideBlankData}
                 />
 
                 {/* </>
@@ -212,6 +233,7 @@ function Dashboard() {
                   maxage={agelimit}
                   vaccine={vaccineName}
                   district={kolar}
+                  hideMethod={hideBlankData}
                 />
 
                 {/* </>
@@ -233,6 +255,7 @@ function Dashboard() {
                   maxage={agelimit}
                   vaccine={vaccineName}
                   district={chikkaballapur}
+                  hideMethod={hideBlankData}
                 />
 
                 {/* </ErrorBoundary> */}
@@ -241,6 +264,7 @@ function Dashboard() {
               </section>
             </Suspense>
           </ListGroup>
+          {/* {console.log('Hi in render 1')} */}
         </Jumbotron>
       </Card>
     </Container>
